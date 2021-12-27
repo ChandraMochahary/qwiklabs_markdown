@@ -10,12 +10,15 @@ img {
 
 ## **Overview**
 
-A ML Model is created using Vertex AI which are able to predict which vehicles are likely to experience part failure based on their usage pattern and configuration, and which are likely not to have any problems. 
+Google’s Vertex AI users can act rapidly and efficiently with the reduced overhead of complex analytics. AI suggests actions and generates detailed reports based on all the combined data from various sources. In this lab,  you will predict which vehicles are likely to experience part failure based on their usage pattern and configuration, and which are likely not to have any problems.
+
+BigQuery can be an excellent source and sink for the data that is being used in Vertex AI. You will ceate few views which are required to create ML model in VERTEX AI and Looker Dashboard. Looker is a modern data platform in Google Cloud that lets users analyze and visualize  data interactively.
+
 
 ### **Objectives**
-* In BigQuery prepare the Data required for training the model.
-* In Vertex AI, train the Model.
-* In looker, analyze the Data.
+* Create views in BigQuery.
+* Build a ML model and Predict using VertexAI.
+* Create Dashboard using Looker.
 
 ## **Setup**
 ### **Before you click the Start Lab button**
@@ -115,19 +118,21 @@ Full documentation of gcloud is available on [Google Cloud gcloud Overview](http
 
 ## **Data Preprocessing in BigQuery**
 
-The required data for the lab is preloaded into the BigQuery. We will use this dataset to prepare the data that is required for the Training, Testing and Prediction purpose.
+The required data for the lab is preloaded into the BigQuery. We will use this dataset to prepare the train and test set that is required to build a ML model and predictions.
 
 ### **Load Bigquery UI**
 ![](assests/img/2021-12-17-11-20-14.png)
-1. In the Navigation Menu, click BigQuery.
 
-![](assests/img/2021-12-17-11-22-04.png)
-1. In the Explorer pane, drill down to your project and click on autorepair dataset.
+1. In the **Navigation Menu**, click **BigQuery**.
+
+![](assests/img/2021-12-17-11-23-42.png)
+
+2. In the **Explorer pane**, drill down to your project and click on **autorepair** dataset.
 
 ### **Prepare data for training, testing and prediction**
 
 Now, we will create Views from the Tables in the Dataset for training, testing and prediction purposes.
-![](assests/img/2021-12-17-11-23-42.png)
+
 1. **Copy and paste the query below into the editor and click run**. This query creates a view called **autoelemetry_aggr** using the *autoelemetry* and *vindevicemapping* tables. It is a complete set of Data for ML Modeling.
 
 ```sql
@@ -241,7 +246,6 @@ These queries will create three more views : **autotelemetry_predict**, **autote
 Project_ID = !(gcloud config get-value core/project)
 Project_ID = Project_ID[0]
 ```
-
 
 6. Copy and paste the code below and click **Run**. This code imports the packages required for this demo.
 ```python
@@ -456,14 +460,158 @@ Enter the provided Username and Password in the Email and Password fields.
 
 For this Lab a Looker Project is already created and loaded with required LookML code. Looker is connected with **autorepair** datset in BigQuery. It contains three Looker Dashboards which gives three different perspective to analyze the data.
 
-1. **Customer View** - This dashboard is a view from Customer’s car console with vehicle telemetry data, errors alerts and dealer communication with next steps to address the issue.
-2. **Sales Operations View** - This view shows vehicle sales by month and region. It also shows recall data by make and model.
-3. **Warranty Manager View** - This view contains predicted vehicle sensor failure data. Warranty Managers can see the make, model, region and city of the repairs and know estimates for the predicted repair cost and effort.
-
 In Looker we will perform following actions:
 * Explore the Project
 * Explore the Dashboards
-* Create a Sample Dashboards
+* Create a Sample Dashboard
+
+# **Explore the Project**
+
+![](2021-12-25-12-54-22.png)
+
+1. Turn ON the **Development Mode** from the **Main menu** .
+2. Click on **Explore** from the **Main menu**.
+![](2021-12-25-14-17-39.png)
+3. You will find already created **Future-auto-retailing** project. 
+
+Now lets explore which car make has more error reported among Chevrolet, Buick and GMC. 
+
+4. Click on **Autotelemetryaggr**.
+5. Click the arrow next to **Dealer Data**.
+
+The available dimensions and measures will be listed in the data panel for Dealer Data.
+
+6. Under **Dealer data > DIMENSIONS**, click **Make**.
+7. Under **Dealer data > MEASURES**, click **Count Distint Vin**.
+8. In **Visualization** panel, click **Column** visual.
+9. In **Filter** panel, check the **Custom Filter** and copy & paste the below Looker expression.
+```
+ ( ${autotelemetryaggr.dtc} = 1 OR ${autotelemetryaggr.dtc} = 2) AND ( ${dealer_data.make} = "CHEVROLET" OR ${dealer_data.make} = "GMC" OR ${dealer_data.make} = "BUICK" )
+```
+8. Click **Run**.
+
+Similarly different scenarios could be analyzed using appropriate visuals and filters.
+
+#**Explore the Dashboards**
+In this part of the lab, you will explore the dashboards created from autorepair project.
+
+![](2021-12-26-16-28-06.png)
+1. Click on **Main menu**.
+
+![](2021-12-26-16-32-56.png)
+
+2. Click on **Close Explore**
+
+![](2021-12-26-16-35-06.png)
+
+3. Click the arrow next to **Folders** and click on **LookML dashboards**.
+
+4. Click on **Customer View** dashboard.
+
+**Customer View Dashboard** - This dashboard provides information to Customer’s car console and provides information about the car and alerts the customer about sensor error. This dashboard also provides information on agent communication and steps to address the issue.
+
+5. Click on **LookML dasboards** and open **Sales Operations View** dashboard.
+
+**Sales Operations View** - This dashboard provides vehicle sales by month, make, region and Auto Recall by Make. 
+
+6. 5. Click on **LookML dasboards** and open **Warranty Manager View** dashboard.
+
+**Warranty Manager View** - This dashboard provides information about predicted vehicle sensor failure. Warranty Managers can see the make, model, region and city of the repairs and know their estimates through predicted repair cost and effort.
+
+# **Create a Sample Dashboard - CHEVROLET SALES OVERVIEW**
+In this Looker part, you will create a Dashboard by exploring the Dealer Data. Here you will create four visuals: Single Value, Table, Bar and Map.
+
+# **TASK 1: Create a Single Value Visual : CHEVROLET - SALES FIGURE**
+1. On the left-side navigation panel of the Looker User Interface, click **Explore**.
+2. Under **Future-auto-retailing**, click **Dealer Data**.
+3. Click the arrow next to **Dealer Data**.
+
+The available dimensions and measures will be listed in the data panel for Dealer Data.
+
+4. Under **Dealer data > MEASURES**, click **Sum Sales**.
+5. In **Visualization** panel, click **Single Value** visual.
+![](2021-12-27-11-40-24.png)
+6. Under **Dealer data > DIMENSIONS**, hover over **Make** and click **Filter by field**, which is available right to **Make**.
+7. In **Filter** panel, you could see the added **Make** dimension as filter. Now leave **is equal to** as it is and click inside the **Text Box** next to **is equal to**, a dropdown list will pop, choose **CHEVROLET**.
+8. Click **Run**.
+9. Click the **Wrench or Settings Icon** next to **Run**. Click on **Save > As a Look**.
+10. **Save Look** dailog box opens, enter the **Title** as **CHEVROLET SALES FIGURE**. Select the **Shared** folder from the left pane and click **Save & View Look**.
+
+# **TASK 2: Create a Bar Visual : CHEVROLET - SALES**
+1. On the left-side navigation panel of the Looker User Interface, click **Explore**.
+2. Under **Future-auto-retailing**, click **Dealer Data**.
+3. Click the arrow next to **Dealer Data**.
+
+The available dimensions and measures will be listed in the data panel for Dealer Data.
+
+4. Under **Dealer data > DIMENSIONS**, click **Car Name**.
+5. Under **Dealer data > MEASURES**, click **Sum Sales**.
+6. In **Visualization** panel, click **Bar** visual.
+![](2021-12-27-11-40-45.png)
+7. Under **Dealer data > DIMENSIONS**, hover over **Make** and click **Filter by field**, which is available right to **Make**.
+8. In **Filter** panel, you could see the added **Make** dimension as filter. Now leave **is equal to** as it is and click inside the **Text Box** next to **is equal to**, a dropdown list will pop, choose **CHEVROLET**.
+8. Click **Run**.
+9. Click the **Wrench or Settings Icon** next to **Run**. Click on **Save > As a Look**.
+10. **Save Look** dailog box opens, enter the **Title** as **CHEVROLET - SALES**. Select the **Shared** folder from the left pane and click **Save & View Look**.
+
+# **TASK 3: Create a  Table Visual : CHEVROLET VARIANT & BODY TYPE**
+1. On the left-side navigation panel of the Looker User Interface, click **Explore**.
+2. Under **Future-auto-retailing**, click **Dealer Data**.
+3. Click the arrow next to **Dealer Data**.
+
+The available dimensions and measures will be listed in the data panel for Dealer Data.
+
+4. Under **Dealer data > DIMENSIONS**, click **Car Name**.
+5. Under **Dealer data > DIMENSIONS**, click **Variant**.
+6. Under **Dealer data > DIMENSIONS**, click **Body Type**.
+7. In **Visualization** panel, click **Table** visual.
+![](2021-12-27-12-02-33.png)
+8. Under **Dealer data > DIMENSIONS**, hover over **Make** and click **Filter by field**, which is available right to **Make**.
+9. In **Filter** panel, you could see the added **Make** dimension as filter. Now leave **is equal to** as it is and click inside the **Text Box** next to **is equal to**, a dropdown list will pop, choose **CHEVROLET**.
+10. Click **Run**.
+11. Click the **Wrench or Settings Icon** next to **Run**. Click on **Save > As a Look**.
+12. **Save Look** dailog box opens, enter the **Title** as **CHEVROLET VARIANT & BODY TYPE**. Select the **Shared** folder from the left pane and click **Save & View Look**.
+
+# **TASK 4: Create a  Map Visual : CHEVROLET SALES - STATEWISE**
+1. On the left-side navigation panel of the Looker User Interface, click **Explore**.
+2. Under **Future-auto-retailing**, click **Dealer Data**.
+3. Click the arrow next to **Dealer Data**.
+
+The available dimensions and measures will be listed in the data panel for Dealer Data.
+
+4. Under **Dealer data > DIMENSIONS**, click **State**.
+5. Under **Dealer data > MEASURES**, click **Sum Sales**.
+7. In **Visualization** panel, click **Map** visual.
+![](2021-12-27-12-03-36.png)
+8. Under **Dealer data > DIMENSIONS**, hover over **Make** and click **Filter by field**, which is available right to **Make**.
+9. In **Filter** panel, you could see the added **Make** dimension as filter. Now leave **is equal to** as it is and click inside the **Text Box** next to **is equal to**, a dropdown list will pop, choose **CHEVROLET**.
+10. Click **Run**.
+11. Click the **Wrench or Settings Icon** next to **Run**. Click on **Save > As a Look**.
+12. **Save Look** dailog box opens, enter the **Title** as **CHEVROLET SALES - STATEWISE**. Select the **Shared** folder from the left pane and click **Save & View Look**.
+
+# **TASK 5: Create a Dashboard : CHEVROLET SALES - OVERVIEW**
+1. Click on **Folders** from **Main menu** and open the **Shared folders**.
+2. Click on **New** available at top right and select **Dashboard**.
+3. **Create Dashboad** dialog box pops, enter the **Name** as **CHEVROLET SALES - OVERVIEW**.
+4. Click on **Create Dashboard**.
+5. Again click on **Shared folders** from Main menu.
+6. Open **CHEVROLET SALES FIGURE** look present under **Looks**.
+7. Click the **Wrench or Settings Icon** next to **Edit**. Click on **Save > To an existing dashboard**.
+8. **Add to a Dashboard in this folder** dialog opens, select **CHEVROLET SALES - OVERVIEW** dashboard from **Shared** folder.
+9. Click on **Save to Dashboard**. 
+10. Again click on **Shared folders** from Main menu and add the other 3 looks in the similar way.
+11. Again click on **Shared folders** from Main menu and open the **CHEVROLET SALES - OVERVIEW** dashboard.
+12. Click on **Dashboard actions** on top rigth.
+13. Click on **Filters** and turn on the **Cross-filtering**.
+14. Using **Hold and drag to reorder**, arrange the looks as per the below image.
+![](2021-12-23-21-33-25.png)
+15. Click in **Save**.
+16. Click on **MALIBU FWD PREMIER** from **CHEVROLET VARIANT & BODT TYPE** table. You could see all other looks getting filtered  to MALIBU FWD PREMIER. This is attained by Cross-filtering. You can also try this by clicking at any looks.
+
+
+
+
+
 
 
 
