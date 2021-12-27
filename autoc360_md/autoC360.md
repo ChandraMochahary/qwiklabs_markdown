@@ -492,7 +492,7 @@ The available dimensions and measures will be listed in the data panel for Deale
 
 Similarly different scenarios could be analyzed using appropriate visuals and filters.
 
-#**Explore the Dashboards**
+# **Explore the Dashboards**
 In this part of the lab, you will explore the dashboards created from autorepair project.
 
 ![](2021-12-26-16-28-06.png)
