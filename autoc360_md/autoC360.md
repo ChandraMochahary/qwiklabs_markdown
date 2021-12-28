@@ -445,7 +445,8 @@ on a.dtcPredicted = c.Error_Code
 )
 ```
 
-# **Login to Looker**
+## Exploring and Creating a Dashboard in Looker
+### **Login to Looker**
 
 Using the Qwiklabs browser tab/window or the separate browser you are using for the Qwiklabs session, click the **Open Looker** and use the credentials to sign in to the Looker instance for this lab.
 
@@ -456,7 +457,7 @@ Using the Qwiklabs browser tab/window or the separate browser you are using for 
 
 Enter the provided Username and Password in the Email and Password fields.
 
-# **Overview** 
+### **Overview** 
 
 For this Lab a Looker Project is already created and loaded with required LookML code. Looker is connected with **autorepair** datset in BigQuery. It contains three Looker Dashboards which gives three different perspective to analyze the data.
 
@@ -465,7 +466,7 @@ In Looker we will perform following actions:
 * Explore the Dashboards
 * Create a Sample Dashboard
 
-# **Explore the Project**
+### **Explore the Project**
 
 ![](2021-12-25-12-54-22.png)
 
@@ -492,7 +493,7 @@ The available dimensions and measures will be listed in the data panel for Deale
 
 Similarly different scenarios could be analyzed using appropriate visuals and filters.
 
-# **Explore the Dashboards**
+### **Explore the Dashboards**
 In this part of the lab, you will explore the dashboards created from autorepair project.
 
 ![](2021-12-26-16-28-06.png)
@@ -514,14 +515,14 @@ In this part of the lab, you will explore the dashboards created from autorepair
 
 **Sales Operations View** - This dashboard provides vehicle sales by month, make, region and Auto Recall by Make. 
 
-6. 5. Click on **LookML dasboards** and open **Warranty Manager View** dashboard.
+6. Click on **LookML dasboards** and open **Warranty Manager View** dashboard.
 
 **Warranty Manager View** - This dashboard provides information about predicted vehicle sensor failure. Warranty Managers can see the make, model, region and city of the repairs and know their estimates through predicted repair cost and effort.
 
-# **Create a Sample Dashboard - CHEVROLET SALES OVERVIEW**
+### **Create a Sample Dashboard - CHEVROLET SALES OVERVIEW**
 In this Looker part, you will create a Dashboard by exploring the Dealer Data. Here you will create four visuals: Single Value, Table, Bar and Map.
 
-# **TASK 1: Create a Single Value Visual : CHEVROLET - SALES FIGURE**
+### **TASK 1: Create a Single Value Visual : CHEVROLET - SALES FIGURE**
 1. On the left-side navigation panel of the Looker User Interface, click **Explore**.
 2. Under **Future-auto-retailing**, click **Dealer Data**.
 3. Click the arrow next to **Dealer Data**.
@@ -537,7 +538,7 @@ The available dimensions and measures will be listed in the data panel for Deale
 9. Click the **Wrench or Settings Icon** next to **Run**. Click on **Save > As a Look**.
 10. **Save Look** dailog box opens, enter the **Title** as **CHEVROLET SALES FIGURE**. Select the **Shared** folder from the left pane and click **Save & View Look**.
 
-# **TASK 2: Create a Bar Visual : CHEVROLET - SALES**
+### **TASK 2: Create a Bar Visual : CHEVROLET - SALES**
 1. On the left-side navigation panel of the Looker User Interface, click **Explore**.
 2. Under **Future-auto-retailing**, click **Dealer Data**.
 3. Click the arrow next to **Dealer Data**.
@@ -554,7 +555,7 @@ The available dimensions and measures will be listed in the data panel for Deale
 9. Click the **Wrench or Settings Icon** next to **Run**. Click on **Save > As a Look**.
 10. **Save Look** dailog box opens, enter the **Title** as **CHEVROLET - SALES**. Select the **Shared** folder from the left pane and click **Save & View Look**.
 
-# **TASK 3: Create a  Table Visual : CHEVROLET VARIANT & BODY TYPE**
+### **TASK 3: Create a  Table Visual : CHEVROLET VARIANT & BODY TYPE**
 1. On the left-side navigation panel of the Looker User Interface, click **Explore**.
 2. Under **Future-auto-retailing**, click **Dealer Data**.
 3. Click the arrow next to **Dealer Data**.
@@ -572,7 +573,7 @@ The available dimensions and measures will be listed in the data panel for Deale
 11. Click the **Wrench or Settings Icon** next to **Run**. Click on **Save > As a Look**.
 12. **Save Look** dailog box opens, enter the **Title** as **CHEVROLET VARIANT & BODY TYPE**. Select the **Shared** folder from the left pane and click **Save & View Look**.
 
-# **TASK 4: Create a  Map Visual : CHEVROLET SALES - STATEWISE**
+### **TASK 4: Create a  Map Visual : CHEVROLET SALES - STATEWISE**
 1. On the left-side navigation panel of the Looker User Interface, click **Explore**.
 2. Under **Future-auto-retailing**, click **Dealer Data**.
 3. Click the arrow next to **Dealer Data**.
@@ -581,15 +582,15 @@ The available dimensions and measures will be listed in the data panel for Deale
 
 4. Under **Dealer data > DIMENSIONS**, click **State**.
 5. Under **Dealer data > MEASURES**, click **Sum Sales**.
-7. In **Visualization** panel, click **Map** visual.
+6. In **Visualization** panel, click **Map** visual.
 ![](2021-12-27-12-03-36.png)
-8. Under **Dealer data > DIMENSIONS**, hover over **Make** and click **Filter by field**, which is available right to **Make**.
-9. In **Filter** panel, you could see the added **Make** dimension as filter. Now leave **is equal to** as it is and click inside the **Text Box** next to **is equal to**, a dropdown list will pop, choose **CHEVROLET**.
-10. Click **Run**.
-11. Click the **Wrench or Settings Icon** next to **Run**. Click on **Save > As a Look**.
-12. **Save Look** dailog box opens, enter the **Title** as **CHEVROLET SALES - STATEWISE**. Select the **Shared** folder from the left pane and click **Save & View Look**.
+7. Under **Dealer data > DIMENSIONS**, hover over **Make** and click **Filter by field**, which is available right to **Make**.
+8. In **Filter** panel, you could see the added **Make** dimension as filter. Now leave **is equal to** as it is and click inside the **Text Box** next to **is equal to**, a dropdown list will pop, choose **CHEVROLET**.
+9. Click **Run**.
+10. Click the **Wrench or Settings Icon** next to **Run**. Click on **Save > As a Look**.
+11. **Save Look** dailog box opens, enter the **Title** as **CHEVROLET SALES - STATEWISE**. Select the **Shared** folder from the left pane and click **Save & View Look**.
 
-# **TASK 5: Create a Dashboard : CHEVROLET SALES - OVERVIEW**
+### **TASK 5: Create a Dashboard : CHEVROLET SALES - OVERVIEW**
 1. Click on **Folders** from **Main menu** and open the **Shared folders**.
 2. Click on **New** available at top right and select **Dashboard**.
 3. **Create Dashboad** dialog box pops, enter the **Name** as **CHEVROLET SALES - OVERVIEW**.
